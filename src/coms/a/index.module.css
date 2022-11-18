@@ -1,0 +1,13 @@
+.wrap :global .ant-btn-primary {
+  background-color: pink;
+}
+.wrap {
+  width: 200px;
+  background-color: pink;
+}
+.wrap1 {
+  color: pink;
+}
+.item:last-of-type {
+  margin-bottom: 20px;
+}

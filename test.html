@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-sacle=1, maximum-scale=1"
+    />
+    <title></title>
+    <script defer>
+      console.log(document.querySelector('ul'))
+      function scrollDirect(fn) {
+        console.log(this)
+        var beforeScrollTop = $(this).scrollTop()
+        fn = fn || function () {}
+        window.addEventListener(
+          'scroll',
+          function (event) {
+            event = event || window.event
+            var afterScrollTop = $(this).scrollTop()
+            delta = afterScrollTop - beforeScrollTop
+            beforeScrollTop = afterScrollTop
+            var scrollTop = $(this).scrollTop()
+            var scrollHeight = $(document).height()
+            var windowHeight = $(this).height()
+            if (
+              afterScrollTop < 10 ||
+              afterScrollTop > $(document.body).height() - 10
+            ) {
+              fn('up')
+            } else {
+              if (Math.abs(delta) < 10) {
+                return false
+              }
+              fn(delta > 0 ? 'down' : 'up')
+            }
+          },
+          false
+        )
+      }
+      var upflag = 1
+      var downflag = 1
+      //scroll滑动,上滑和下滑只执行一次！
+      scrollDirect(function (direction) {
+        if (direction == 'down') {
+          if (downflag) {
+            console.log('down')
+            downflag = 0
+            upflag = 1
+          }
+        }
+        if (direction == 'up') {
+          if (upflag) {
+            console.log('up')
+            downflag = 1
+            upflag = 0
+          }
+        }
+      })
+    </script>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      ul {
+        margin: 0;
+        scroll-behavior: smooth;
+        font-size: 40px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: 1px solid #000;
+
+        padding: 0;
+      }
+
+      li {
+        height: 100%;
+        width: 100%;
+        flex-shrink: 0;
+        text-align: center;
+      }
+      li:nth-child(1) {
+        background-color: teal;
+      }
+      li:nth-child(2) {
+        background-color: gold;
+      }
+      li:nth-child(3) {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+  </body>
+</html>
